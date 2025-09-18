@@ -1,34 +1,69 @@
-# Safe-Eye
-An AI-powered chatbot that combines computer vision and natural conversation to deliver an interactive experience. It uses YOLOv3 for object detection in uploaded images and Flask for a lightweight yet fast web interface.
+# React + TypeScript + Vite
 
-**Features**
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Image Upload & Detection – Detects objects in uploaded images with YOLOv3.
+Currently, two official plugins are available:
 
-Smart Conversations – Generates context-aware replies based on detected objects.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-Real-Time Accuracy – Leverages YOLOv3 for precise and fast recognition.
+## Expanding the ESLint configuration
 
-Clean Web UI – Built with Flask, HTML, and CSS for ease of use.
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-Versatile Use Cases – Can be adapted for:
+```js
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
 
-Fashion advice
+      // Remove tseslint.configs.recommended and replace with this
+      ...tseslint.configs.recommendedTypeChecked,
+      // Alternatively, use this for stricter rules
+      ...tseslint.configs.strictTypeChecked,
+      // Optionally, add this for stylistic rules
+      ...tseslint.configs.stylisticTypeChecked,
 
-Plant identification
+      // Other configs...
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
 
-Meme explanation
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-**Technologies Used**
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-YOLOv3 – Object detection
-
-Flask – Backend and frontend server
-
-OpenCV – Image processing
-
-Python – Core programming language
-
-HTML, CSS – Web templates
-
-Pre-trained YOLOv3 dataset
+export default tseslint.config([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      // Other configs...
+      // Enable lint rules for React
+      reactX.configs['recommended-typescript'],
+      // Enable lint rules for React DOM
+      reactDom.configs.recommended,
+    ],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+      // other options...
+    },
+  },
+])
+```
